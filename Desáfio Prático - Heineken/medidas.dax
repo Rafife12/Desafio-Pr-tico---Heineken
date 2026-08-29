@@ -1,0 +1,23 @@
+// ============================================================
+// Medidas DAX — Desafio Heineken (Manutenção de Frota)
+// ============================================================
+
+// Soma o valor de todas as ordens de serviço no mês.
+// Indicador geral: quanto a frota custou de manutenção.
+Gasto Total = SUM('Base de dados'[Valor (R$)])
+
+// Calcula a média do valor por ordem de serviço.
+// Serve como referência: atendimentos muito acima da média merecem atenção.
+Ticket Médio = AVERAGE('Base de dados'[Valor (R$)])
+
+// Conta o número total de ordens de serviço registradas no mês.
+Qtd OS = COUNTROWS('Base de dados')
+
+// Conta quantos veículos (placas) únicos tiveram algum atendimento,
+// mesmo que um mesmo veículo apareça em várias ordens de serviço.
+Qtd Veículos = DISTINCTCOUNT('Base de dados'[Placa])
+
+// Conta quantas ordens de serviço têm Valor (R$) = 0.
+// Quantifica o ponto de atenção identificado no tratamento de dados
+// (possível garantia OU falha de lançamento — precisa de confirmação humana).
+OS com Valor Zerado = CALCULATE(COUNTROWS('Base de dados'), 'Base de dados'[Valor (R$)] = 0)
